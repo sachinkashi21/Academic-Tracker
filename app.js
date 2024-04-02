@@ -15,6 +15,9 @@ app.use(express.urlencoded({extended: true}));
 const methodOverride=require("method-override");
 app.use(methodOverride("_method"));
 
+const engine=require("ejs-mate");
+app.engine("ejs",engine);
+
 const studentRouter=require("./routes/student");
 
 const mongoose = require("mongoose");
