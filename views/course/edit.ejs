@@ -1,0 +1,24 @@
+<% layout("layout/boilerplate") %>
+
+<h2>Edit Course</h2>
+<h6><%=course.name%></h6>
+<h6><%=course.code%></h6>
+<form action="/course/<%= course._id %>/update" method="POST">
+    <label for="cie">CIE:</label>
+    <input type="number" id="cie" name="cie" value="<%= course.cie %>"><br>
+    
+    <label for="see">SEE:</label>
+    <input type="number" id="see" name="see" value="<%= course.see %>"><br>
+    
+    <label for="semester">Semester:</label>
+    <input type="number" id="semester" name="semester" value="<%= course.semester %>"><br>
+    
+    <label for="credits">Credits:</label>
+    <input type="number" id="credits" name="credits" value="<%= course.credits %>"><br>
+    
+    <label for="duration">Duration:</label>
+    <input type="number" id="duration" name="duration" value="<%= course.duration %>"><br>
+    
+    <button type="submit">Update</button>
+</form>
+

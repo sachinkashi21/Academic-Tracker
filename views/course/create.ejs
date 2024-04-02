@@ -1,0 +1,27 @@
+<% layout("layout/boilerplate")%>
+
+<h2>Add Course</h2>
+    <form action="/course/new" method="POST">
+        <label for="name">Course Name:</label><br>
+        <input type="text" id="name" name="name" required><br>
+        
+        <label for="code">Course Code:</label><br>
+        <input type="text" id="code" name="code" required><br>
+        
+        <label for="credits">Credits:</label><br>
+        <input type="number" id="credits" name="credits" required><br>
+        
+        <label for="semester">Semester:</label><br>
+        <input type="number" id="semester" name="semester"><br>
+        
+        <label for="cie">CIE:</label><br>
+        <input type="number" id="cie" name="cie"><br>
+        
+        <label for="see">SEE:</label><br>
+        <input type="number" id="see" name="see"><br>
+        
+        <label for="duration">Duration:</label><br>
+        <input type="number" id="duration" name="duration"><br>
+        
+        <button type="submit">Submit</button>
+    </form>

@@ -1,0 +1,53 @@
+<% layout("layout/boilerplate") %>
+<style>
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        margin: 10px;
+        width: calc(33.33% - 20px); /* 3 cards in a row with margin */
+        float: left;
+        box-sizing: border-box;
+    }
+
+    .card h3 {
+        margin-top: 0;
+    }
+
+    @media screen and (max-width: 768px) {
+        .card {
+            width: calc(50% - 20px); /* 2 cards in a row with margin on smaller screens */
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .card {
+            width: 100%; /* 1 card per row on smaller screens */
+        }
+    }
+</style>
+
+<h2>All Courses</h2>
+
+<% courses.forEach(course => { %>
+    <div class="card">
+        <h4><%= course.name %></h4>
+        <p><strong>Code:</strong> <%= course.code %></p> 
+        <p><strong>Credits:</strong> <%= course.credits %></p>
+        <p><strong>Semester:</strong> <%= course.semester %></p>
+        <p><strong>CIE:</strong> <%= course.cie %></p>
+        <p><strong>SEE:</strong> <%= course.see %></p>
+        <p><strong>Duration:</strong> <%= course.duration %></p>
+
+        <div>
+            <form action="/course/<%= course._id %>?_method=DELETE" method="POST">
+                <button type="submit">Delete</button>
+            </form>
+            <a href="/course/<%= course._id %>/edit"><button>Edit</button></a>
+        </div>
+        
+    </div>
+<% }); %>
+
+<div style="clear:both;"></div> 

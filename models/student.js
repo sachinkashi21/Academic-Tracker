@@ -10,9 +10,17 @@ let studentSchema = new Schema({
         default: "assets/avatar.jpg",
         set: (v) => (v === "" ? "avatar.jpg" : v),
     },
+    semester: {
+        type: Number,
+        
+    },
+    branch: {
+        type: String,
+        enum:["CSE","ISE","MECH","CIVIL","AIML","EEE","ECE"]
+    }
 
 });
 
-userSchema.plugin(passportLocalMongoose);
+studentSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Student", studentSchema);

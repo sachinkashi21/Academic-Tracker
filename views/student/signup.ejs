@@ -1,0 +1,20 @@
+<% layout("layout/boilerplate")%>
+
+<form action="/student/signup" novalidate method="POST" class="student-login-from">
+    <h4>Sign Up</h4>
+    <div>
+        <label for="username" >Username</label>
+        <input type="text" required placeholder="username" id="username" name="username">
+    </div>
+    <div>
+        <label for="password" class="form-label">Password</label>
+        <input type="password" required placeholder="password" id="password" name="password">
+    </div>
+    <button>
+        Submit
+    </button>
+</form>
+<hr>
+<button type="button"><i class="fa-brands fa-google" ></i> Google</button>
+<button type="button"><i class="fa-brands fa-github-alt"></i> Github</button>
+
