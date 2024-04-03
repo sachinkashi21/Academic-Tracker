@@ -1,0 +1,20 @@
+<% layout("layout/boilerplate") %>
+
+<div class="container">
+    <h1>Edit Target</h1>
+    <form action="/target/<%= target._id %>/edit" method="POST">
+        <div style="margin: 20px;">
+            <label for="title"><strong>Title: </strong></label>
+            <input type="text" id="title" name="title" value="<%= target.title %>" required>
+        </div>
+        <div style="margin: 20px;">
+            <label for="description"><strong>Description: </strong></label><br>
+            <textarea id="description" name="description" cols="100" required><%= target.description %></textarea>
+        </div>
+        <div style="margin: 20px;">
+            <label for="dueDate"><strong>Due Date: </strong></label>
+            <input type="date" id="dueDate" name="dueDate" min="<%= (new Date()).toISOString().split('T')[0] %>" value="<%= target.dueDate.toISOString().substr(0, 10) %>" required>
+        </div>
+        <button style="margin: 20px;" type="submit">Update Target</button>
+    </form>
+</div>

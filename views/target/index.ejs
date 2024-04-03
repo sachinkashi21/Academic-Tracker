@@ -1,0 +1,102 @@
+
+
+<% layout("layout/boilerplate") %>
+
+<%
+    function markAsDone(targetId) {
+        // Send an AJAX request to mark the target as Done
+        fetch(`/targets/${targetId}/done`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status: 'done' })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Reload the page or update the UI as needed
+                location.reload();
+            } else {
+                // Handle error response
+                console.error('Failed to mark target as Done');
+            }
+        })
+        .catch(error => {
+            console.error('Error marking target as Done:', error);
+        });
+    }
+%>
+
+<div class="container">
+    <h1>My Targets</h1>
+    <% if (targets.length > 0) { %>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Due Date</th>
+                    <th>Time Left</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% targets.forEach(target => { %>
+                    <tr>
+                        <td>
+
+                            <form action="/target/<%= target._id %>/edit" method="GET">
+                                <button type="submit">Edit</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/target/<%= target._id %>/delete" method="POST">
+                                <button type="submit">Delete</button>
+                            </form>
+                            
+                        </td>
+                        
+                        <td><%= target.title %></td>
+                        <td><%= target.description %></td>
+                        <td><%= target.dueDate.toDateString() %></td>
+                        <%
+                            function getTimeLeft(dueDate) {
+                                const now = new Date();
+                                const difference = dueDate - now;
+                                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                                return `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
+                                }
+                        %> 
+
+                        <td><%= getTimeLeft(target.dueDate) %></td>
+                        <td><%= target.status %></td> <!-- Display the status -->
+                        <td>
+                            <form action="/target/<%= target._id %>/done" method="POST">
+                                <button type="submit">
+                                    <% if (target.status === 'pending') { %>
+                                        Done
+                                    <% } else { %>
+                                        Undo
+                                    <% } %>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>No targets found.</p>
+    <% } %>
+</div>
+
+<form action="/target/new"><button>+ADD Target</button></form>
+
+
+   

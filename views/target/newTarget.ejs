@@ -1,0 +1,28 @@
+<!-- newTarget.ejs -->
+
+<% layout("layout/boilerplate") %>
+
+<style>
+    form div{
+        margin: 10px;
+    }
+</style>
+
+<div class="container">
+    <h3>Add New Target</h3>
+    <form action="/target/new" method="POST">
+        <div style="margin: 20px;">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div style="margin: 20px;">
+            <label for="description">Description:</label><br>
+            <textarea id="description" name="description" cols="100" style="border: 1px solid black;"></textarea>
+        </div>
+        <div style="margin: 20px;">
+            <label for="dueDate">Due Date:</label><br>
+            <input type="date" id="dueDate" name="dueDate" required min="<%= (new Date()).toISOString().split('T')[0] %>">
+        </div>
+        <button type="submit">Add Target</button>
+    </form>
+</div>

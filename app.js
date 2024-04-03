@@ -26,6 +26,7 @@ const studentRouter=require("./routes/student");
 const courseRouter=require("./routes/course");
 const testRouter=require("./routes/testscore");
 const expenseRouter=require("./routes/expense");
+const targetRouter=require("./routes/target");
 
 const mongoose = require("mongoose");
 main().then((res) => {
@@ -101,6 +102,7 @@ app.use("/student",studentRouter);
 app.use("/course",courseRouter);
 app.use("/test",testRouter);
 app.use("/expense",expenseRouter);
+app.use("/target",targetRouter);
 
 app.listen(port,()=>{
     console.log("app listening at",port);
