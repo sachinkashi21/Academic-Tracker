@@ -1,5 +1,45 @@
 <% layout("layout/boilerplate") %>
 
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 10px;
+    }
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<h1>Test Scores</h1>
+    <table>
+        <tr>
+            <th>Course</th>
+            <th>Degree</th>
+            <th>Semester</th>
+            <th>SEE Exam Month</th>
+            <th>SEE Marks</th>
+            <th>Status</th>
+            <th>Grade</th>
+        </tr>
+        <% testScores.forEach(score => { %>
+            <tr>
+                <td><%= score.course.name %></td>
+                <td><%= score.degree %></td>
+                <td><%= score.semester %></td>
+                <td><%= score.see.examMonth %></td>
+                <td><%= score.see.marks %></td>
+                <td><%= score.status %></td>
+                <td><%= score.Grade %></td>
+            </tr>
+        <% }) %>
+    </table>
+
 <div class="container">
     <div class="row">
         <% courses.forEach(course => { %>

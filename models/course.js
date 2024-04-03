@@ -6,6 +6,10 @@ const courseSchema = new mongoose.Schema({
       type: String,
       required: true
     },
+    branch: {
+      type: String,
+      enum:["CSE","ISE","AIML","MECH","CIVIL","EEE","ECE"]
+    },
     code: {
       type: String,
       required: true,

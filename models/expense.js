@@ -1,23 +1,34 @@
 const mongoose = require('mongoose');
 
 const expenseSchema = new mongoose.Schema({
-    description: {
-      type: String,
-      required: true
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Student',
     },
-    category: {
-      type: String,
-      required: true
-    },
-    amount: {
-      type: Number,
-      required: true
-    },
-    date: {
-      type: Date,
-      default: Date.now
-    }
-  });
+    tuitionFees: {
+      amount: Number,
+      date: { type: Date, default: Date.now },
+      receipt: Number,
+  },
+  textbooks: [{
+      name: String,
+      author: String,
+      amount: Number
+  }],
+  stationery: [{
+      name: String,
+      description: String,
+      amount: Number
+  }],
+  otherExpenses: [{
+      name: String,
+      description: String,
+      amount: Number
+  }],
+  monthlyBudget: Number,
+  yearlyBudget: Number,
+  
+});
 
   const Expense = mongoose.model('Expense', expenseSchema);
 

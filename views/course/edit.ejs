@@ -1,9 +1,28 @@
 <% layout("layout/boilerplate") %>
 
-<h2>Edit Course</h2>
+<style>
+    form *{
+        margin : 8px;
+    }
+</style>
+
+<h3>Edit Course</h3>
 <h6><%=course.name%></h6>
 <h6><%=course.code%></h6>
+<hr>
 <form action="/course/<%= course._id %>/update" method="POST">
+    
+    <label for="branch">Branch:</label><br>
+    <select name="branch" id="branch" required>
+        <option value="CSE">CSE</option>
+        <option value="ISE">ISE</option>
+        <option value="EEE">EEE</option>
+        <option value="ECE">ECE</option>
+        <option value="AIML">AIML</option>
+        <option value="MECH">Mechanical</option>
+        <option value="CIVIL">Civil</option>
+    </select>
+
     <label for="cie">CIE:</label>
     <input type="number" id="cie" name="cie" value="<%= course.cie %>"><br>
     

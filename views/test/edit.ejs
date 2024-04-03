@@ -1,0 +1,57 @@
+
+<% layout("layout/boilerplate") %>
+
+<style>
+    form *{
+        margin: 5px;
+    }
+</style>
+
+<h3>Edit Scores</h3>
+<h6>Course: <%=testScore.course.name%></h6>
+<h6>Degree: <%=testScore.degree%></h6>
+<h6>Branch: <%=testScore.degree%></h6>
+    <form action="/test/scores/<%= testScore._id %>/edit" method="POST">
+        <label for="semester">Semester: </label>
+<select id="semester" name="semester" required>
+    <option value=1>1</option>
+    <option value=2>2</option>
+    <option value=3>3</option>
+    <option value=4>4</option>
+    <option value=5>5</option>
+    <option value=6>6</option>
+    <option value=7>7</option>
+    <option value=8>8</option>
+</select>
+        <label for="internal1_written">Internal 1 Written Marks:</label>
+        <input type="number" id="internal1_written" name="internal1_written" value="<%= testScore.cie.internal1.marks.written %>" min="0" max="20" >
+        <br>
+        <label for="internal1_assignment">Internal 1 Assignment Marks:</label>
+        <input type="number" id="internal1_assignment" name="internal1_assignment" value="<%= testScore.cie.internal1.marks.assignment %>" min="0" max="5" >
+        <br>
+        <label for="internal2_written">Internal 2 Written Marks:</label>
+        <input type="number" id="internal2_written" name="internal2_written" value="<%= testScore.cie.internal2.marks.written %>" min="0" max="20" >
+        <br>
+        <label for="internal2_assignment">Internal 2 Assignment Marks:</label>
+        <input type="number" id="internal2_assignment" name="internal2_assignment" value="<%= testScore.cie.internal2.marks.assignment %>" min="0" max="5" >
+        <br>
+        <label for="see_marks">SEE Marks:</label>
+        <input type="number" id="see_marks" name="see_marks" value="<%= testScore.see.marks %>" min="0" max="100" >
+        <br>
+        <label for="status">Status:</label>
+        <select name="status" id="status" >
+            <option value="pass" <% if (testScore.status === 'pass') { %>selected<% } %>>Pass</option>
+            <option value="fail" <% if (testScore.status === 'fail') { %>selected<% } %>>Fail</option>
+        </select>
+        <br>
+        <label for="Grade">Grade:</label>
+        <select name="Grade" id="Grade" >
+            <option value="A" <% if (testScore.Grade === 'A') { %>selected<% } %>>A</option>
+            <option value="B" <% if (testScore.Grade === 'B') { %>selected<% } %>>B</option>
+            <option value="C" <% if (testScore.Grade === 'C') { %>selected<% } %>>C</option>
+            <option value="D" <% if (testScore.Grade === 'D') { %>selected<% } %>>D</option>
+            <option value="F" <% if (testScore.Grade === 'F') { %>selected<% } %>>F</option>
+        </select>
+        <br>
+        <button type="submit">Submit</button>
+    </form>

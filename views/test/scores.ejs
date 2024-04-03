@@ -1,29 +1,47 @@
 <% layout("layout/boilerplate") %>
 
-<h4>Your Test Scores</h4>
+<style>
+    table th,tr,td{
+        border: 1px solid black;
+        padding: 10px;
+    }
+    table{
+        margin: 10px;
+    }
+</style>
 
-<table>
-    <thead>
+<h1>Test Scores</h1>
+
+
+
+<% if (testScores.length > 0) { %>
+    <form action="/test/score">
+        <button name="s" value="<%=testScores[0].course.semester%>">All Scores</button>
+    </form>
+    <table style="border:1px solid black">
         <tr>
-            <th>Test Name</th>
-            <th>Score</th>
-            <th>Action</th>
+            <th style="border:1px solid black">Course</th>
+            <th style="border:1px solid black">Degree</th>
+            <th style="border:1px solid black">Internal 1</th>
+            <th style="border:1px solid black">Internal 2</th>
+            <th style="border:1px solid black">SEE</th>
+            <th style="border:1px solid black">Status</th>
+            <th style="border:1px solid black">Grade</th>
         </tr>
-    </thead>
-    <tbody>
         <% testScores.forEach(score => { %>
             <tr>
-                <td><%= score.testName %></td>
-                <td><%= score.score %></td>
-                <td>
-                    <!-- Edit button to edit score -->
-                    <form action="/test-scores/<%= score._id %>/edit" method="GET">
-                        <button type="submit">Edit</button>
-                    </form>
-                </td>
+                <td><%= score.course.name %></td>
+                <td><%= score.degree %></td>
+                <td>Written: <%= score.cie.internal1.marks.written %> + Assignment: <%= score.cie.internal1.marks.assignment %></td>
+                <td>Written: <%= score.cie.internal2.marks.written %> + Assignment: <%= score.cie.internal2.marks.assignment %></td>
+                <td>Marks: <%= score.see.marks %></td>
+                <td><%= score.status %></td>
+                <td><%= score.Grade %></td>
+                <td><form action="/test/scores/<%=score._id%>/edit"><button>Edit</button></form></td>
             </tr>
-        <% }); %>
-    </tbody>
-</table>
-
-<form action="/test/scores/add" method="GET"><button>+ Add Scores</button></form>
+        <% }) %>
+    </table>
+<% } else { %>
+    <p>No data found</p>
+    <form action="/test/scores/add" method="GET"><button>Add Scores</button></form>
+<% } %>

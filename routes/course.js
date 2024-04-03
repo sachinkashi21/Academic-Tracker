@@ -20,7 +20,7 @@ router.get('/new', (req, res) => {
 // Route to handle form submission
 router.post('/new', async (req, res) => {
     try {
-        const { name, code, credits, semester, cie, see, duration } = req.body;
+        const { name, code, credits, semester, cie, see, duration,branch } = req.body;
         
         
         const newCourse = new Course({
@@ -30,7 +30,8 @@ router.post('/new', async (req, res) => {
             semester,
             cie,
             see,
-            duration
+            duration,
+            branch
         });
 
         // Save the new course to the database
@@ -74,7 +75,7 @@ router.get('/:id/edit', async (req, res) => {
 router.post('/:id/update', async (req, res) => {
     try {
         const courseId = req.params.id;
-        const { cie, see, semester, credits, duration } = req.body;
+        const { cie, see, semester, credits, duration,branch } = req.body;
 
         // Find the course by ID and update its fields
         const updatedCourse = await Course.findByIdAndUpdate(courseId, {
@@ -82,7 +83,8 @@ router.post('/:id/update', async (req, res) => {
             see,
             semester,
             credits,
-            duration
+            duration,
+            branch
         }, { new: true });
 
         if (!updatedCourse) {

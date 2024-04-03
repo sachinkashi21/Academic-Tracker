@@ -25,6 +25,7 @@ app.engine("ejs",engine);
 const studentRouter=require("./routes/student");
 const courseRouter=require("./routes/course");
 const testRouter=require("./routes/testscore");
+const expenseRouter=require("./routes/expense");
 
 const mongoose = require("mongoose");
 main().then((res) => {
@@ -99,6 +100,7 @@ app.get("/",(req,res)=>{
 app.use("/student",studentRouter);
 app.use("/course",courseRouter);
 app.use("/test",testRouter);
+app.use("/expense",expenseRouter);
 
 app.listen(port,()=>{
     console.log("app listening at",port);

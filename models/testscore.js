@@ -7,6 +7,9 @@ const testScoreSchema = new mongoose.Schema({
       ref: 'Course',
       required: true
     },
+    semester:{
+      type: Number,
+    },
     studentId: {
         type: Schema.Types.ObjectId,
         ref: "Student",
