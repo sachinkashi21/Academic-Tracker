@@ -20,6 +20,58 @@ router.get('/sem', async (req, res) => {
     }
 });
 
+router.get("/scores/add", async (req, res) => {
+    try {
+        semester=3;
+        const courses = await Course.find({ semester: semester });
+        
+        res.render('test/addTest.ejs', { courses, studentId: "660c1951d4bce118cf3ce6b2" }); // Assuming user's ID is available in req.user
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+})
+
+router.post('/scores/add', async (req, res) => {
+    try {
+        
+        const newTestScore = new TestScore({
+            course: req.body.course,
+            studentId: req.body.studentId,
+            degree: req.body.degree,
+            cie: {
+                internal1: {
+                    examMonth: req.body.internal1_examMonth,
+                    marks: {
+                        written: req.body.internal1_written,
+                        assignment: req.body.internal1_assignment
+                    }
+                },
+                internal2: {
+                    examMonth: req.body.internal2_examMonth,
+                    marks: {
+                        written: req.body.internal2_written,
+                        assignment: req.body.internal2_assignment
+                    }
+                },
+                
+            },
+            see: {
+                examMonth: req.body.see_examMonth,
+                marks: req.body.see_marks
+            },
+            status: req.body.status,
+            Grade: req.body.Grade
+        });
+        
+        await newTestScore.save();
+        res.redirect(`/test/scores/${req.body.course}`); 
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 router.get('/scores/:courseId',async (req, res) => {
     try {
         const courseId = req.params.courseId; 
@@ -34,7 +86,9 @@ router.get('/scores/:courseId',async (req, res) => {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-})
+});
+
+
 
 
 module.exports = router;

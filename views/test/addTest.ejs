@@ -1,0 +1,71 @@
+<% layout("layout/boilerplate") %>
+
+<h1>Add Test Scores</h1>
+<form action="/test/scores/add" method="POST">
+    <input type="hidden" name="studentId" value="<%= studentId %>"> <!-- Hidden field for student ID -->
+    <label for="course">Course:</label>
+    <select name="course" id="course" required>
+        <!-- Populate options dynamically from the database -->
+        <% courses.forEach(course => { %>
+            <option value="<%= course._id %>"><%= course.name %></option>
+        <% }) %>
+    </select>
+    <br>
+    <label for="degree">Degree:</label>
+<select id="degree" name="degree" required>
+    <option value="BTech">BTech</option>
+    <option value="BSc">BSc</option>
+    <option value="MTech">MTech</option>
+    <option value="MSc">MSc</option>
+    <option value="MArch">MArch</option>
+    <option value="BArch">BArch</option>
+</select>
+    
+    <hr>
+    <h4>CIE</h4>    
+    <h5>Internal 1</h5>
+    <label for="internal1_examMonth">Exam Month:</label>
+    <input type="number" id="internal1_examMonth" name="internal1_examMonth" min="1" max="12" required>
+    <br>
+    <label for="internal1_written">Written Marks:</label>
+    <input type="number" id="internal1_written" name="internal1_written" min="0" max="20" required>
+    <br>
+    <label for="internal1_assignment">Assignment Marks:</label>
+    <input type="number" id="internal1_assignment" name="internal1_assignment" min="0" max="5" required>
+    <br>
+    <h5>Internal 2</h5>
+    <label for="internal2_examMonth">Exam Month:</label>
+    <input type="number" id="internal2_examMonth" name="internal2_examMonth" min="1" max="12" required>
+    <br>
+    <label for="internal2_written">Written Marks:</label>
+    <input type="number" id="internal2_written" name="internal2_written" min="0" max="20" required>
+    <br>
+    <label for="internal2_assignment">Assignment Marks:</label>
+    <input type="number" id="internal2_assignment" name="internal2_assignment" min="0" max="5" required>
+    <br>
+    <hr>
+    <h4>SEE</h4>
+    <label for="see_examMonth">Exam Month:</label>
+    <input type="number" id="see_examMonth" name="see_examMonth" min="1" max="12" required>
+    <br>
+    <label for="see_marks">Marks:</label>
+    <input type="number" id="see_marks" name="see_marks" min="0" max="100" required>
+    <br>
+    <hr>
+    <label for="status">Status:</label>
+    <select name="status" id="status" required>
+        <option value="pass">Pass</option>
+        <option value="fail">Fail</option>
+    </select>&nbsp;&nbsp;&nbsp;
+    <label for="Grade">Grade:</label>
+    <select name="Grade" id="Grade" required>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="F">F</option>
+    </select>
+    <br><br>
+    <button type="submit">Submit</button>
+    <br><br>
+</form>

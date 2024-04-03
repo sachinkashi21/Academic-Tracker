@@ -12,14 +12,70 @@ const testScoreSchema = new mongoose.Schema({
         ref: "Student",
         required: true
     },
-    score: {
-      type: Number,
-      required: true
+    degree: {
+      type: String,
     },
-    date: {
-      type: Date,
-      default: Date.now
-    }
+    cie:{
+      internal1:{
+        examMonth: {
+          type: Number, 
+          min: 1,
+          max: 12 // Assuming month numbers are between 1 and 12
+        },
+        marks:{
+          written: {
+            type: Number,
+            min: 0,
+            max: 20,
+          },
+          assignment: {
+            type: Number,
+            min: 0,
+            max: 5,
+          },
+        }
+      },
+      internal2:{
+        examMonth: {
+          type: Number, 
+          min: 1,
+          max: 12 // Assuming month numbers are between 1 and 12
+        },
+        marks:{
+          written: {
+            type: Number,
+            min: 0,
+            max: 20,
+          },
+          assignment: {
+            type: Number,
+            min: 0,
+            max: 5,
+          },
+        }
+      },
+    },
+    see:{
+      examMonth: {
+        type: Number, 
+        min: 1,
+        max: 12 // Assuming month numbers are between 1 and 12
+      },
+      marks: {
+        type: Number,
+        min: 0, 
+        max: 100,
+      }
+    },
+    status:{
+      type: String,
+      enum:["pass","fail"],
+    },
+    Grade: {
+      type: String,
+      enum: ["A", "B", "C", "D", "F"],
+    },
+   
   });
 
   
