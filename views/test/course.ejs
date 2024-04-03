@@ -1,0 +1,19 @@
+<% layout("layout/boilerplate") %>
+
+<div class="container">
+    <div class="row">
+        <% courses.forEach(course => { %>
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= course.name %></h5>
+                        <p class="card-text">Code: <%= course.code %></p>
+                        <p class="card-text">Credits: <%= course.credits %></p>
+                        <p class="card-text">Semester: <%= course.semester %></p>
+                        <form action="/test/scores/<%=course._id%>"><button>Check Scores</button></form>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>

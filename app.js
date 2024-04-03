@@ -24,6 +24,7 @@ app.engine("ejs",engine);
 
 const studentRouter=require("./routes/student");
 const courseRouter=require("./routes/course");
+const testRouter=require("./routes/testscore");
 
 const mongoose = require("mongoose");
 main().then((res) => {
@@ -85,6 +86,10 @@ passport.serializeUser(Student.serializeUser());
 passport.deserializeUser(Student.deserializeUser());
 
 
+app.use((req, res, next) => {
+    res.locals.currUser = {_id:"660c1951d4bce118cf3ce6b2",semester: 3,username:  'xyx',photo: 'assets/avatar.jpg', }; 
+    next();
+});
 
 
 app.get("/",(req,res)=>{
@@ -93,6 +98,7 @@ app.get("/",(req,res)=>{
 
 app.use("/student",studentRouter);
 app.use("/course",courseRouter);
+app.use("/test",testRouter);
 
 app.listen(port,()=>{
     console.log("app listening at",port);

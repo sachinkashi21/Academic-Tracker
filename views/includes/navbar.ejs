@@ -1,8 +1,17 @@
 <nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
-        <img src="assets/logo.webp" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+        <img src="/assets/logo.webp" alt="Logo" width="50" class="d-inline-block align-text-top">
         Academic Tracker
       </a>
+      <div>
+
+        <form action="/course"><button>Courses</button></form>
+        <form action="/test"><button>Progress Card</button></form>
+      </div>
+      <div>
+        <img src="/<%=currUser.photo%>" alt="Logo" width="40"><%=currUser.username%>
+
+      </div>
     </div>
   </nav>

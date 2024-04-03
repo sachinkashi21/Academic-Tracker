@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {Schema}= mongoose;
 
 const testScoreSchema = new mongoose.Schema({
     course: {
@@ -7,8 +8,9 @@ const testScoreSchema = new mongoose.Schema({
       required: true
     },
     studentId: {
-      type: String,
-      required: true
+        type: Schema.Types.ObjectId,
+        ref: "Student",
+        required: true
     },
     score: {
       type: Number,

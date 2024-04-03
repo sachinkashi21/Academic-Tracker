@@ -1,0 +1,27 @@
+<% layout("layout/boilerplate") %>
+
+<h4>Your Test Scores</h4>
+
+<table>
+    <thead>
+        <tr>
+            <th>Test Name</th>
+            <th>Score</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% testScores.forEach(score => { %>
+            <tr>
+                <td><%= score.testName %></td>
+                <td><%= score.score %></td>
+                <td>
+                    <!-- Edit button to edit score -->
+                    <form action="/test-scores/<%= score._id %>/edit" method="GET">
+                        <button type="submit">Edit</button>
+                    </form>
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
