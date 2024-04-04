@@ -1,43 +1,90 @@
 <% layout("layout/boilerplate") %>
+<%
+    function getDayName(dayNumber) {
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        return days[dayNumber - 1];
+    }
 
+    function formatDate(date) {
+        const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+        return date.toLocaleDateString('en-US', options);
+    }
+%>
 <div class="container">
-    <h1>Weekly Attendance Information</h1>
+    <h1>Attendance Information</h1>
 
-    <% if (!startDate || !endDate || !daysInWeek) { %>
-        <p>Please provide valid start date, end date, and days in a week.</p>
+    <% if (!myAttendance || myAttendance.length === 0) { %>
+        <p>No attendance records found.</p>
     <% } else { %>
+
+        <% const today = new Date(); %>
+        <% const totalClassesUntilToday = myAttendance.reduce((total, week, weekIndex) => {
+            if (new Date(startOfCourseDate.getTime() + (weekIndex * 7 - 1) * 24 * 60 * 60 * 1000) <= today) {
+                return total + week.length;
+            }
+            return total;
+        }, 0); %>
+        <% const presentClasses = myAttendance.reduce((total, week) => {
+            week.forEach(status => {
+                if (status === 'present') total++;
+            });
+            return total;
+        }, 0); %>
+        <% const attendancePercentage = totalClassesUntilToday ? (presentClasses / totalClassesUntilToday * 100).toFixed(2) : 0; %>
+        <p>Number of days present: <%= presentClasses %> / <%= totalClassesUntilToday %></p>
+        <p>Percentage attendance: <%= attendancePercentage %>%</p>
+        
+
         <table class="table">
             <thead>
                 <tr>
                     <th>Week</th>
                     <% daysInWeek.forEach(day => { %>
-                        <th><%= day %></th>
+                        <th><%= getDayName(day) %></th>
                     <% }); %>
                 </tr>
             </thead>
             <tbody>
-                <% for(let i = 0; i < numberOfWeeks; i++) { %>
+                <% myAttendance.forEach((week, weekIndex) => { %>
                     <tr>
-                        <td>Week <%= i + 1 %></td>
-                        <% daysInWeek.forEach(day => { %>
-                            <td><%= formatDate(getDateForWeekDay(startDate, i, day)) %></td>
+                        <td>Week <%= weekIndex + 1 %></td>
+                        <% week.forEach((status, dayIndex) => { %>
+                            <td>
+                                <%= formatDate(new Date(startOfCourseDate.getTime() + (weekIndex * 7 + daysInWeek[dayIndex] - 1) * 24 * 60 * 60 * 1000)) %>
+                                <% if (new Date(startOfCourseDate.getTime() + (weekIndex * 7 + daysInWeek[dayIndex] - 1) * 24 * 60 * 60 * 1000) <= new Date()) { %>
+                                    <% if (status === 'present') { %>
+                                        <h3>✓</h3>
+                                        <form action="/attendance/<%= attendanceId %>/mark" method="POST">
+                                            <input type="hidden" name="weekIndex" value="<%= weekIndex %>">
+                                            <input type="hidden" name="dayIndex" value="<%= dayIndex %>">
+                                            <input type="hidden" name="status" value="absent">
+                                            <button type="submit">Absent</button>
+                                        </form>
+                                    <% } else if (status === 'absent') { %>
+                                        <h3>✗</h3>
+                                        <form action="/attendance/<%= attendanceId %>/mark" method="POST">
+                                            <input type="hidden" name="weekIndex" value="<%= weekIndex %>">
+                                            <input type="hidden" name="dayIndex" value="<%= dayIndex %>">
+                                            <input type="hidden" name="status" value="present"> <!-- Default to present -->
+                                            <button type="submit">Present</button>
+                                        </form>
+                                    <% } else { %>
+                                        &nbsp; <!-- For non status -->
+                                        <form action="/attendance/<%= attendanceId %>/mark" method="POST">
+                                            <input type="hidden" name="weekIndex" value="<%= weekIndex %>">
+                                            <input type="hidden" name="dayIndex" value="<%= dayIndex %>">
+                                            <input type="hidden" name="status" value="present"> <!-- Default to present -->
+                                            <button type="submit">Present</button>
+                                        </form>
+                                    <% } %>
+                                <% } else { %>
+                                    <p>Future Date</p>
+                                <% } %>
+                            </td>
                         <% }); %>
                     </tr>
-                <% } %>
+                <% }); %>
             </tbody>
         </table>
     <% } %>
 </div>
-
-<script>
-    function getDateForWeekDay(startDate, weekIndex, day) {
-        const date = new Date(startDate);
-        date.setDate(date.getDate() + (weekIndex * 7) + day);
-        return date;
-    }
-
-    function formatDate(date) {
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        return date.toLocaleDateString(undefined, options);
-    }
-</script>

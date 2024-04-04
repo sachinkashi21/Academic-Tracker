@@ -29,7 +29,7 @@ function getDayName(dayNumber) {
                 <% studentAttendance.forEach(attendance => { %>
                     <tr>
                         
-                        <td><form action="/attendance/weekly/<%=attendance.courseId._id%>"><button>My Record</button></form></td>
+                        <td><form action="/attendance/weekly/<%=attendance._id%>"><button>My Record</button></form></td>
                         <td><%= attendance.courseId.name %></td>
                         <td>
                             <% attendance.daysInWeek.forEach(day => { %>

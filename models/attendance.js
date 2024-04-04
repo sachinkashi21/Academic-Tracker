@@ -26,6 +26,15 @@ const attendanceSchema = new mongoose.Schema({
     extraClasses: {
         type: Number, // Number representing the count of extra classes
         default: 0
+    },
+    myAttendance: {
+        type: [[String]], // 2D array representing attendance status
+        validate: {
+            validator: function(arr) {
+                return Array.isArray(arr) && arr.every(subArr => Array.isArray(subArr) && subArr.every(item => ['present', 'absent', 'non'].includes(item)));
+            },
+            message: props => `${props.value} is not a valid attendance status.`
+        }
     }
 });
 
