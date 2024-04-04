@@ -1,11 +1,12 @@
-<h2>Academic Tracker Web application</h2>
-<h3>Team: GSquare</h3>
-<ul>Team Deatils
-    <li>Name: Sachin A
+<body>
+<h2> Academic Tracker Web application </h2>
+<h3> Team: GSquare </h3>
+<ul> Team Deatils
+    <li> Name: Sachin A
         Branch: CSE 
         Semester: 3
     </li>
-    <li>Name: Sarvesh Joglekar
+    <li> Name: Sarvesh Joglekar
         Branch: CSE 
         Semester: 3
     </li>
@@ -34,3 +35,4 @@
     <li>Expense Model: </li>
     <li>Target Model (or deadline remainder)</li>
 </ul>
+</body>
