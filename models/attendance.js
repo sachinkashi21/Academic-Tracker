@@ -1,25 +1,34 @@
 const mongoose = require('mongoose');
 
 const attendanceSchema = new mongoose.Schema({
-    course: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Course',
-      required: true
+    courseId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course',
+        required: true
     },
     studentId: {
-      type: String,
-      required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Student',
+        required: true
     },
-    attended: {
-      type: Boolean,
-      default: false
+    daysInWeek: {
+        type: [Number], // Array of numbers representing days in a week (e.g., 1 for Monday, 2 for Tuesday, etc.)
+        required: true
     },
-    date: {
-      type: Date,
-      default: Date.now
+    startOfCourseDate: {
+        type: Date,
+        required: true
+    },
+    endOfCourseDate: {
+        type: Date,
+        required: true
+    },
+    extraClasses: {
+        type: Number, // Number representing the count of extra classes
+        default: 0
     }
-  });
+});
 
-  const Attendance = mongoose.model('Attendance', attendanceSchema);
+const Attendance = mongoose.model('Attendance', attendanceSchema);
 
-  module.exports=Attendance;
+module.exports = Attendance;

@@ -1,0 +1,31 @@
+<% layout("layout/boilerplate") %>
+
+<div class="container">
+    <h1>My Attendance</h1>
+    <% if (studentAttendance.length > 0) { %>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Days in Week</th>
+                    <th>Start of Course Date</th>
+                    <th>End of Course Date</th>
+                    <th>Extra Classes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% studentAttendance.forEach(attendance => { %>
+                    <tr>
+                        <td><%= attendance.courseId.name %></td>
+                        <td><%= attendance.daysInWeek.join(', ') %></td>
+                        <td><%= attendance.startOfCourseDate.toDateString() %></td>
+                        <td><%= attendance.endOfCourseDate.toDateString() %></td>
+                        <td><%= attendance.extraClasses %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>No attendance records found.</p>
+    <% } %>
+</div>

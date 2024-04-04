@@ -8,6 +8,8 @@ const port=3000;
 const bodyParser = require('body-parser');
 const cookieparser = require("cookieparser");
 
+const Agenda=require('agenda');
+
 cookieparser.parse("foo=bar");
 app.use(bodyParser.json());
 const path = require("path");
@@ -27,17 +29,57 @@ const courseRouter=require("./routes/course");
 const testRouter=require("./routes/testscore");
 const expenseRouter=require("./routes/expense");
 const targetRouter=require("./routes/target");
+const attendanceRouter=require("./routes/attendance");
+
+let Target=require("./models/target.js");
 
 const mongoose = require("mongoose");
 main().then((res) => {
     console.log("connection established");
+    // startAgenda();
 }).catch((err) => {
     console.log(err);
 }) 
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/gbuild');
 }
+// async function startAgenda() {
+//     // Create new instance of Agenda.js
+//     const agenda = new Agenda({ mongo: mongoose.connection });
+//     console.log("tello");
+//     // Define job to check for targets with due date less than 12 hours away
+//     agenda.define('check for approaching targets', async (job) => {
+//         // Calculate the date 12 hours from now
+//         console.log("no")
+//         const twelveHoursFromNow = new Date(Date.now() + 12 * 60 * 60 * 1000);
 
+//         // Find targets with due date less than 12 hours away
+//         const approachingTargets = await Target.find({ dueDate: { $lt: twelveHoursFromNow } });
+
+//         console.log("bello");    
+
+//         // Iterate over approaching targets and perform actions
+//         approachingTargets.forEach(target => {
+//             // Example action: Send notification
+//             sendNotification(target);
+//         });
+
+//         console.log('Checking for approaching targets...');
+//     });
+
+//     // Schedule job to run every hour
+//     agenda.every('1 second', 'check for approaching targets');
+//     console.log("hello");
+
+//     // Start Agenda.js
+//     await agenda.start();
+//     console.log('Agenda.js started successfully');
+// }
+
+// function sendNotification(target) {
+//     // Replace this with your notification logic (e.g., using browser notifications, emails, etc.)
+//     console.log(`Sending notification for approaching target: ${target.title}`);
+// }
 
 const passport=require("passport");
 const LocalStrategy=require("passport-local");
@@ -103,6 +145,7 @@ app.use("/course",courseRouter);
 app.use("/test",testRouter);
 app.use("/expense",expenseRouter);
 app.use("/target",targetRouter);
+app.use("/attendance",attendanceRouter);
 
 app.listen(port,()=>{
     console.log("app listening at",port);

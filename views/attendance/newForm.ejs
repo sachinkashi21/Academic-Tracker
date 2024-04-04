@@ -1,0 +1,33 @@
+<% layout("layout/boilerplate") %>
+
+<div class="container">
+    <h1>Add New Attendance</h1>
+    <form action="/attendance/new" method="POST">
+        <div class="form-group">
+            <label for="courseId">Select Course:</label>
+            <select id="courseId" name="courseId" required>
+                <option value="" disabled selected>Select a course</option>
+                <% courses.forEach(course => { %>
+                    <option value="<%= course._id %>"><%= course.name %> - Semester <%= course.semester %></option>
+                <% }); %>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="daysInWeek">Days in Week:</label>
+            <input type="Text" id="daysInWeek" name="daysInWeek" required>
+        </div>
+        <div class="form-group">
+            <label for="startOfCourseDate">Start of Course Date:</label>
+            <input type="date" id="startOfCourseDate" name="startOfCourseDate" required>
+        </div>
+        <div class="form-group">
+            <label for="endOfCourseDate">End of Course Date:</label>
+            <input type="date" id="endOfCourseDate" name="endOfCourseDate" required>
+        </div>
+        <div class="form-group">
+            <label for="extraClasses">Extra Classes:</label>
+            <input type="number" id="extraClasses" name="extraClasses" required>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
