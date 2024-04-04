@@ -1,0 +1,52 @@
+<% layout("layout/boilerplate") %>
+
+<h1>New Expense</h1>
+
+<form action="/expense" method="POST">
+  <!-- Monthly and Yearly Budget -->
+  <label for="monthlyBudget">Monthly Budget:</label>
+  <input type="number" id="monthlyBudget" name="monthlyBudget" required><br><br>
+  
+  <label for="yearlyBudget">Yearly Budget:</label>
+  <input type="number" id="yearlyBudget" name="yearlyBudget" required><br><br>
+  
+  <!-- Expense Items -->
+  <h2>Expense Items</h2>
+  <div id="itemsContainer">
+    <div class="item">
+      <label for="itemName1">Name:</label>
+      <input type="text" id="itemName1" name="items[0][name]" required><br>
+      
+      <label for="itemDescription1">Description:</label>
+      <input type="text" id="itemDescription1" name="items[0][description]"><br>
+      
+      <label for="itemAmount1">Amount:</label>
+      <input type="number" id="itemAmount1" name="items[0][amount]" required><br><br>
+    </div>
+  </div>
+  
+  <button type="button" onclick="addExpenseItem()">Add Item</button><br><br>
+  
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+  let itemCount = 1;
+
+  function addExpenseItem() {
+    itemCount++;
+    const itemTemplate = `
+      <div class="item">
+        <label for="itemName${itemCount}">Name:</label>
+        <input type="text" id="itemName${itemCount}" name="items[${itemCount - 1}][name]" required><br>
+        
+        <label for="itemDescription${itemCount}">Description:</label>
+        <input type="text" id="itemDescription${itemCount}" name="items[${itemCount - 1}][description]"><br>
+        
+        <label for="itemAmount${itemCount}">Amount:</label>
+        <input type="number" id="itemAmount${itemCount}" name="items[${itemCount - 1}][amount]" required><br><br>
+      </div>
+    `;
+    document.getElementById('itemsContainer').insertAdjacentHTML('beforeend', itemTemplate);
+  }
+</script>

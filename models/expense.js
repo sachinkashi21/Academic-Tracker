@@ -5,6 +5,12 @@ const expenseSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Student',
     },
+    items: [{
+        name: { type: String, required: true },
+        description: String,
+        amount: { type: Number, required: true }
+    }],
+
     tuitionFees: {
       amount: Number,
       date: { type: Date, default: Date.now },

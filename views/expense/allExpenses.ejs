@@ -1,0 +1,57 @@
+<% layout("layout/boilerplate") %>
+
+<style>
+  table, th,td,tr{
+    border: 1px solid black;
+  }
+</style>
+
+<h1>All Expenses</h1>
+
+<form action="/expense/new"><button>Add Expense</button></form>
+<% if (expenses.length === 0) { %>
+  <p>No expenses found.</p>
+<% } else { %>
+  <table>
+    <thead>
+
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Actions</th>
+      </tr>
+    
+    </thead>
+    
+    <tbody>
+      <% expenses.forEach(expense => { %>
+        <%expense.items.forEach(item=>{%>
+
+          <tr>
+            <td><%= item.name %></td>
+            <td><%= item.description %></td>
+            <td>
+              <% if (item.amount !== undefined) { %>
+                $<%= item.amount.toFixed(2) %>
+                <% } else { %>
+                  N/A
+                  <% } %>
+                </td>
+                <td>
+                  <a href="/expense/<%= expense._id %>"  >View</a>
+                  <a href="/expense/<%= expense._id %>/edit"  >Edit</a>
+                  
+                  <form action="/expense/<%= expense._id %>?_method=DELETE" method="POST" style="display:inline">
+                    <button type="submit"  >Delete</button>
+                  </form>
+                </td>
+                
+              </tr>
+              
+              <%})%>
+              <br>
+      <% }); %>
+    </tbody>
+  </table>
+<% } %>

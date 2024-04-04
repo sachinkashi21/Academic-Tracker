@@ -1,0 +1,35 @@
+<% layout("layout/boilerplate") %>
+
+<h1>Expense Details</h1>
+
+<div>
+  <h2>Tuition Fees</h2>
+  <% if (expense.tuitionFees) { %>
+    <p>Date: <%= expense.tuitionFees.date %></p>
+  <% } else { %>
+    <p>No tuition fees data available</p>
+  <% } %>
+</div>
+
+<div>
+  <h2>Items</h2>
+  <% if (expense.items && expense.items.length > 0) { %>
+    <ul>
+      <% expense.items.forEach(item => { %>
+        <li>
+          <p>Name: <%= item.name %></p>
+          <p>Description: <%= item.description %></p>
+          <p>Amount: $<%= item.amount.toFixed(2) %></p>
+        </li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <p>No items data available</p>
+  <% } %>
+</div>
+
+<div>
+  <h2>Budgets</h2>
+  <p>Monthly Budget: <%= expense.monthlyBudget %></p>
+  <p>Yearly Budget: <%= expense.yearlyBudget %></p>
+</div>
