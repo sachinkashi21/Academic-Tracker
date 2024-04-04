@@ -1,3 +1,4 @@
+<body>
 <h2> Academic Tracker Web application </h2>
 <h3> Team: GSquare </h3>
 <ul> Team Deatils
@@ -34,3 +35,4 @@
     <li>Expense Model: </li>
     <li>Target Model (or deadline remainder)</li>
 </ul>
+</body>
