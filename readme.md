@@ -3,12 +3,12 @@
 <h2> Academic Tracker Web application </h2>
 <h3> Team: GSquare </h3>
 <ul> Team Deatils
-    <li> Name: Sachin A
-        Branch: CSE 
+    <li> Name: Sachin A<br>
+        Branch: CSE <br>
         Semester: 3
     </li>
-    <li> Name: Sarvesh Joglekar
-        Branch: CSE 
+    <li> Name: Sarvesh Joglekar<br>
+        Branch: CSE <br>
         Semester: 3
     </li>
 </ul>
