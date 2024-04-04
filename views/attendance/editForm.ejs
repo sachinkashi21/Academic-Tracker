@@ -1,0 +1,33 @@
+<!-- attendance_edit_form.ejs -->
+
+<% layout("layout/boilerplate") %>
+
+<style>
+    form label{
+        font-weight: 600;
+
+    }
+    form input{
+        margin: 5px;
+    }
+</style>
+
+<div class="container">
+    <h1>Edit Attendance Record</h1>
+    <form action="/attendance/<%= attendance._id %>?_method=PUT" method="POST">
+        <label for="daysInWeek">Days in Week:(Comma Separeted)</label>
+        <input type="text" id="daysInWeek" name="daysInWeek" value="<%= attendance.daysInWeek.join(', ') %>">
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;1->Sunday 2->Monday ... 7->Saturday</p>
+
+        <label for="startOfCourseDate">Start of Course Date:</label>
+        <input type="date" id="startOfCourseDate" name="startOfCourseDate" value="<%= attendance.startOfCourseDate.toISOString().split('T')[0] %>"><br>
+
+        <label for="endOfCourseDate">End of Course Date:</label>
+        <input type="date" id="endOfCourseDate" name="endOfCourseDate" value="<%= attendance.endOfCourseDate.toISOString().split('T')[0] %>"><br>
+
+        <label for="extraClasses">Extra Classes:</label>
+        <input type="number" id="extraClasses" name="extraClasses" value="<%= attendance.extraClasses %>"><br>
+
+        <button type="submit">Save Changes</button>
+    </form>
+</div>

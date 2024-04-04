@@ -1,26 +1,55 @@
 <% layout("layout/boilerplate") %>
 
+<%
+function getDayName(dayNumber) {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[dayNumber - 1]; // Adjusting to match JavaScript's day numbering (0 for Sunday)
+}
+%>
+
 <div class="container">
-    <h1>My Attendance</h1>
+    <h1>Course Attendance</h1>
+    <form action="/attendance/new"><button>+Add Course</button></form>
     <% if (studentAttendance.length > 0) { %>
         <table class="table">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Course</th>
                     <th>Days in Week</th>
                     <th>Start of Course Date</th>
                     <th>End of Course Date</th>
                     <th>Extra Classes</th>
+                    <th>Working days</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
                 <% studentAttendance.forEach(attendance => { %>
                     <tr>
+                        
+                        <td><form action="/attendance/weekly/<%=attendance.courseId._id%>"><button>My Record</button></form></td>
                         <td><%= attendance.courseId.name %></td>
-                        <td><%= attendance.daysInWeek.join(', ') %></td>
+                        <td>
+                            <% attendance.daysInWeek.forEach(day => { %>
+                                <%= getDayName(day) %>
+                                <% if (attendance.daysInWeek.indexOf(day) < attendance.daysInWeek.length - 1) { %>, <% } %>
+                            <% }); %>
+                        </td>
                         <td><%= attendance.startOfCourseDate.toDateString() %></td>
                         <td><%= attendance.endOfCourseDate.toDateString() %></td>
                         <td><%= attendance.extraClasses %></td>
+                        <td>
+                            <% 
+                                const startDate = new Date(attendance.startOfCourseDate);
+                                const endDate = new Date(attendance.endOfCourseDate);
+                                const totalDays = ((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1; // Adding 1 to include both start and end dates
+                                const totalWorkingDays = Math.floor(totalDays / 7) * attendance.daysInWeek.length + attendance.extraClasses;
+                                %> <%= totalWorkingDays %>
+                        </td>
+                        <td><form action="/attendance/edit/<%=attendance._id%>"><button>&#8602;</button></form></td>
+                        <td><form action="/attendance/delete/<%=attendance._id%>?_method=DELETE" method="POST"><button>&#9003;</button></form></td>
                     </tr>
                 <% }); %>
             </tbody>

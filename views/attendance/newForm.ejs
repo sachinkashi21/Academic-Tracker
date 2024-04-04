@@ -1,5 +1,14 @@
 <% layout("layout/boilerplate") %>
 
+<style>
+    form label{
+        font-weight: 600;
+    }
+    form input{
+        margin: 5px;
+    }
+</style>
+
 <div class="container">
     <h1>Add New Attendance</h1>
     <form action="/attendance/new" method="POST">
@@ -13,8 +22,9 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="daysInWeek">Days in Week:</label>
+            <label for="daysInWeek">Days in Week: (Comma Seprated)</label>
             <input type="Text" id="daysInWeek" name="daysInWeek" required>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;1->Sunday 2->Monday ... 7->Saturday</p>
         </div>
         <div class="form-group">
             <label for="startOfCourseDate">Start of Course Date:</label>

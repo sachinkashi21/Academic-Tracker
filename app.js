@@ -24,6 +24,7 @@ app.use(methodOverride("_method"));
 const engine=require("ejs-mate");
 app.engine("ejs",engine);
 
+
 const studentRouter=require("./routes/student");
 const courseRouter=require("./routes/course");
 const testRouter=require("./routes/testscore");
