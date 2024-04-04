@@ -1,17 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const Target = require('../models/target');
+const { isLoggedIn } = require('../middleware');
 
 
-router.get('/', async (req, res) => {
+router.get('/',isLoggedIn, async (req, res) => {
     try {
         
-        // if (!req.user) { 
-        //     return res.redirect('/login');
-        // }
-        let reqUserId="660c1951d4bce118cf3ce6b2";
+        
+        // let req.user.id="660c1951d4bce118cf3ce6b2";
 
-        const targets = await Target.find({ user: reqUserId });
+        const targets = await Target.find({ user: req.user.id });
         targets.sort((a, b) => a.dueDate - b.dueDate);
         const currentTargets = targets.filter(target => {
             const now = new Date();
@@ -26,37 +25,28 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/new', (req, res) => {
+router.get('/new',isLoggedIn, (req, res) => {
    
-    // if (!req.user) {
-       
-    //     return res.redirect('/login');
-    // }
 
-    
     res.render('target/newTarget.ejs');
 });
 
 
 
-router.post('/new', async (req, res) => {
-    
-    // if (!req.user) {
-       
-    //     return res.redirect('/login');
-    // }
+router.post('/new', isLoggedIn,async (req, res) => {
+  
 
     try {
        
         const { title, description, dueDate } = req.body;
 
-        let reqUserId="660c1951d4bce118cf3ce6b2";
+        // let req.user.id="660c1951d4bce118cf3ce6b2";
 
         const newTarget = new Target({
             title: title,
             description: description,
             dueDate: dueDate,
-            user: reqUserId
+            user: req.user.id
         });
 
         
@@ -71,7 +61,7 @@ router.post('/new', async (req, res) => {
     }
 });
 
-router.post('/:id/done', async (req, res) => {
+router.post('/:id/done',isLoggedIn, async (req, res) => {
     const targetId = req.params.id;
 
     try {
@@ -98,7 +88,7 @@ router.post('/:id/done', async (req, res) => {
 });
 
 // Route to delete a target
-router.post('/:id/delete', async (req, res) => {
+router.post('/:id/delete',isLoggedIn, async (req, res) => {
     const targetId = req.params.id;
 
     try {
@@ -114,7 +104,7 @@ router.post('/:id/delete', async (req, res) => {
 });
 
 // Route to update a target
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit',isLoggedIn, async (req, res) => {
     const targetId = req.params.id;
 
     try {
@@ -135,7 +125,7 @@ router.get('/:id/edit', async (req, res) => {
 });
 
 // Route to handle form submission for updating a target
-router.post('/:id/edit', async (req, res) => {
+router.post('/:id/edit',isLoggedIn, async (req, res) => {
     const targetId = req.params.id;
     const { title, description, dueDate } = req.body;
 

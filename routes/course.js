@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const Course=require("../models/course.js");
+const { isLoggedIn } = require('../middleware.js');
 
-router.get("/", async (req, res) => {
+router.get("/",isLoggedIn, async (req, res) => {
     try {
         const courses = await Course.find({});
         res.render('course/index.ejs', { courses: courses }); // Rendering index.ejs and passing the courses data
@@ -13,12 +14,12 @@ router.get("/", async (req, res) => {
     }
 })
 
-router.get('/new', (req, res) => {
+router.get('/new',isLoggedIn, (req, res) => {
     res.render('course/create.ejs'); 
 });
 
 // Route to handle form submission
-router.post('/new', async (req, res) => {
+router.post('/new',isLoggedIn, async (req, res) => {
     try {
         const { name, code, credits, semester, cie, see, duration,branch } = req.body;
         
@@ -46,7 +47,7 @@ router.post('/new', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',isLoggedIn, async (req, res) => {
     try {
         const deletedCourse = await Course.findByIdAndDelete(req.params.id);
         if (!deletedCourse) {
@@ -59,7 +60,7 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit',isLoggedIn, async (req, res) => {
     try {
         const course = await Course.findById(req.params.id);
         if (!course) {
@@ -72,7 +73,7 @@ router.get('/:id/edit', async (req, res) => {
     }
 });
 
-router.post('/:id/update', async (req, res) => {
+router.post('/:id/update',isLoggedIn, async (req, res) => {
     try {
         const courseId = req.params.id;
         const { cie, see, semester, credits, duration,branch } = req.body;

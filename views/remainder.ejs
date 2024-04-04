@@ -1,0 +1,46 @@
+<% layout("layout/boilerplate") %>
+
+<h1>Remainders</h1><br>
+
+<h4>Targets due within 12 hours:</h4>
+<ul>
+  <% within12hrs.forEach(target => { %>
+    <li class="within12hrs">
+      <strong><%= target.title %></strong> - <%= target.description %> (Due: <%= new Date(target.dueDate).toLocaleString() %>)
+    </li>
+  <% }); %>
+</ul>
+
+<h4>Targets due within 24 hours:</h4>
+<ul>
+  <% within24hrs.forEach(target => { %>
+    <li class="within24hrs">
+      <strong><%= target.title %></strong> - <%= target.description %> (Due: <%= new Date(target.dueDate).toLocaleString() %>)
+    </li>
+  <% }); %>
+</ul>
+
+<style>
+  h2 {
+    margin-top: 20px;
+  }
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .within12hrs {
+    background-color: #f2d9d9; /* light green */
+  }
+  .within24hrs {
+    background-color: #e6ffe7; /* light blue */
+  }
+  .beyond24hrs {
+    background-color: #dff2de; /* light red */
+  }
+</style>

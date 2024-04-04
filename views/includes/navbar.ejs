@@ -14,9 +14,18 @@
         <form action="/attendance"><button>Attendence</button></form>
 
       </div>
-      <div>
-        <img src="/<%=currUser.photo%>" alt="Logo" width="40"><%=currUser.username%>
+      
+      <%if(currUser && currUser.length!=0){%>
 
-      </div>
+        <div>
+          <img src="/<%=currUser.photo%>" alt="Logo" width="40">
+          <%if(currUser.username){%>
+             <%=currUser.username%>
+          <%} else{%>
+            <%=currUser.name%>
+          <%}%>
+          
+        </div>
+      <%}%>
     </div>
   </nav>

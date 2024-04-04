@@ -1,0 +1,19 @@
+<% layout("layout/boilerplate")%>
+
+<form action="/student/postsignup" method="POST">
+    <label for="Sem">Semester</label>
+    <input type="number" id="sem" name="Semester" >
+
+    <label for="Branch">Branch</label>
+    <select name="branch" id="Branch">
+        <option value="CSE">CSE</option>
+        <option value="ISE">ISE</option>
+        <option value="EEE">EEE</option>
+        <option value="ECE">ECE</option>
+        <option value="AIML">AIML</option>
+        <option value="CIVIL">CIVIL</option>
+        <option value="MECH">MECH</option>
+    </select>
+
+    <button>Submit</button>
+</form>

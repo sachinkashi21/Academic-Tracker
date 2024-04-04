@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Attendance = require('../models/attendance');
 const Course=require('../models/course.js');
+const { isLoggedIn } = require('../middleware.js');
 
 // Route to view details about attendance
-router.get('/', async (req, res) => {
-    // const { studentId } = req.user;
-    let studentId="660c1951d4bce118cf3ce6b2";
+router.get('/',isLoggedIn, async (req, res) => {
+
+    // const { studentId } = req.user;  
+    let studentId=req.user;
     try {
         // Retrieve all attendance records
         const studentAttendance = await Attendance.find({ studentId }).populate("courseId");
@@ -19,10 +21,10 @@ router.get('/', async (req, res) => {
 });
 
 // Route to post info about attendance
-router.get("/new",async(req,res)=>{
+router.get("/new",isLoggedIn,async(req,res)=>{
     try {
         // Retrieve all courses from the database
-        const courses = await Course.find({ semester: 3 }).sort(); // Assuming you have a 'semester' field in the Course model
+        const courses = await Course.find({ semester: req.user.semester }).sort(); // Assuming you have a 'semester' field in the Course model
         
         // Pass courses data to the EJS template
         res.render('attendance/newForm.ejs', { courses });
@@ -32,9 +34,9 @@ router.get("/new",async(req,res)=>{
     }
 })
 
-router.post('/new', async (req, res) => {
+router.post('/new',isLoggedIn, async (req, res) => {
     // const { studentId } = req.user;
-    let studentId = "660c1951d4bce118cf3ce6b2";
+    let studentId = req.user;
 
     const { courseId, daysInWeek, startOfCourseDate, endOfCourseDate, extraClasses } = req.body;
     try {
@@ -69,9 +71,9 @@ router.post('/new', async (req, res) => {
 
 
 // Route to get info of particular course attendance
-router.get('/:courseId', async (req, res) => {
-    // const { studentId } = req.user;
-    let studentId="660c1951d4bce118cf3ce6b2";
+router.get('/:courseId',isLoggedIn, async (req, res) => {
+    const { studentId } = req.user;
+    // let studentId="660c1951d4bce118cf3ce6b2";
     const { courseId } = req.params;
     try {
         // Retrieve attendance records for the specified course ID
@@ -84,7 +86,7 @@ router.get('/:courseId', async (req, res) => {
     }
 });
 
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id',isLoggedIn, async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -103,7 +105,7 @@ router.get('/edit/:id', async (req, res) => {
 });
 
 
-router.put('/:id', async (req, res) => {
+router.put('/:id',isLoggedIn, async (req, res) => {
     const { id } = req.params;
     const { daysInWeek, startOfCourseDate, endOfCourseDate, extraClasses } = req.body;
     
@@ -147,7 +149,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', isLoggedIn,async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -166,7 +168,7 @@ router.delete('/delete/:id', async (req, res) => {
     }
 });
 
-router.get('/weekly/:attendanceId', async (req, res) => {
+router.get('/weekly/:attendanceId',isLoggedIn, async (req, res) => {
     const { attendanceId } = req.params;
 
     try {
@@ -204,7 +206,7 @@ router.get('/weekly/:attendanceId', async (req, res) => {
 });
 
 
-router.post('/:attendanceId/mark', async (req, res) => {
+router.post('/:attendanceId/mark',isLoggedIn, async (req, res) => {
     const { attendanceId } = req.params;
     const { weekIndex, dayIndex, status } = req.body;
 

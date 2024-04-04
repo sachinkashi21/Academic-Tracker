@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const Expense=require("../models/expense.js");
+const { isLoggedIn } = require('../middleware.js');
 
 
-router.get('/',async (req, res) => {
+router.get('/',isLoggedIn,async (req, res) => {
     try {
         
         const expenses = await Expense.findOne({ user: "660c1951d4bce118cf3ce6b2" });
@@ -23,12 +24,12 @@ router.get('/',async (req, res) => {
     }
 });
 
-router.get('/new', (req, res) => {
+router.get('/new',isLoggedIn, (req, res) => {
     
     res.render('expense/newExp.ejs');
 });
 
-router.post('/new', async (req, res) => {
+router.post('/new',isLoggedIn, async (req, res) => {
     
     try {
         
@@ -53,7 +54,7 @@ router.post('/new', async (req, res) => {
 });
 
 // Get All Expenses
-router.get('/', async (req, res) => {
+router.get('/',isLoggedIn, async (req, res) => {
 
     let ydata={data:{
         "tuitionFees": {
@@ -85,7 +86,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get Single Expense
-router.get('/:id', async (req, res) => {
+router.get('/:id',isLoggedIn, async (req, res) => {
     try {
         const expense = await Expense.findById(req.params.id);
         if (expense == null) {
@@ -98,7 +99,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update Expense
-router.put('/expenses/:id', async (req, res) => {
+router.put('/expenses/:id',isLoggedIn, async (req, res) => {
     try {
         const expense = await Expense.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.json(expense);
@@ -108,7 +109,7 @@ router.put('/expenses/:id', async (req, res) => {
 });
 
 // Delete Expense
-router.delete('/expenses/:id', async (req, res) => {
+router.delete('/expenses/:id',isLoggedIn, async (req, res) => {
     try {
         await Expense.findByIdAndDelete(req.params.id);
         res.status(204).send();

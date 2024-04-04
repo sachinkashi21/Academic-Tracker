@@ -88,9 +88,11 @@ const LocalStrategy=require("passport-local");
 //User model require
 const Student=require("./models/student.js");
 
+
 //require sessions and flash middleware
 const session=require("express-session");
 const MongoStore = require('connect-mongo');
+const { isLoggedIn } = require("./middleware.js");
 // const flash=require("connect-flash");
 
 //session store
@@ -132,18 +134,59 @@ passport.deserializeUser(Student.deserializeUser());
 
 
 app.use((req, res, next) => {
-    res.locals.currUser = {_id:"660c1951d4bce118cf3ce6b2",semester: 3,username:  'xyx',photo: 'assets/avatar.jpg', }; 
+    res.locals.currUser = req.user;
+    console.log(req.user);
     next();
 });
 
 
-app.get("/",(req,res)=>{
-    res.send("hello");
-})
+app.get('/stu', isLoggedIn,async (req, res) => {
+    try {
+        // Assuming you have some way of getting the logged in student's ID
+        const loggedInStudentId = req.user.id; // Adjust this according to your authentication logic
+        
+        // Fetch all targets of the logged in student
+        const targets = await Target.find({ user: loggedInStudentId }).lean();
+
+        // Get the current date and time
+        const currentDate = new Date();
+
+        // Categorize targets based on due date
+        const within12hrs = [];
+        const within24hrs = [];
+        const beyond24hrs = [];
+
+        targets.forEach(target => {
+            const dueDate = new Date(target.dueDate);
+
+            // Calculate time difference in milliseconds
+            const timeDiff = dueDate - currentDate;
+            const hoursDiff = timeDiff / (1000 * 60 * 60);
+
+            if (hoursDiff <= 12) {
+                within12hrs.push(target);
+            } else if (hoursDiff <= 24) {
+                within24hrs.push(target);
+            } else {
+                beyond24hrs.push(target);
+            }
+        });
+
+        // Render an ejs file with the categorized targets
+        res.render('remainder.ejs', {
+            within12hrs: within12hrs,
+            within24hrs: within24hrs,
+            beyond24hrs: beyond24hrs
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 app.use("/student",studentRouter);
 app.use("/course",courseRouter);
-app.use("/test",testRouter);
+app.use("/test",isLoggedIn,testRouter);
 app.use("/expense",expenseRouter);
 app.use("/target",targetRouter);
 app.use("/attendance",attendanceRouter);

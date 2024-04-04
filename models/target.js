@@ -1,9 +1,9 @@
-// Step 3: Create a Database Schema
+
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Define the schema for the Target model
+
 const targetSchema = new Schema({
     user:{
         type: mongoose.Schema.Types.ObjectId,
