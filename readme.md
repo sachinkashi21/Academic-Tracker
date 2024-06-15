@@ -1,4 +1,4 @@
-Video Drive Link: https://drive.google.com/file/d/1PranUu_HH63QJI94P8wQhPoWghnVYDKR/view?usp=drive_link
+Video Demo Link: https://drive.google.com/file/d/1PranUu_HH63QJI94P8wQhPoWghnVYDKR/view?usp=drive_link
 <body>
 <h2> Academic Tracker Web application </h2>
 <h3> Team: GSquare </h3>
