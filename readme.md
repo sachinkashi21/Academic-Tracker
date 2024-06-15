@@ -2,7 +2,7 @@ Video Drive Link: https://drive.google.com/file/d/1PranUu_HH63QJI94P8wQhPoWghnVY
 <body>
 <h2> Academic Tracker Web application </h2>
 <h3> Team: GSquare </h3>
-<ul> Team Deatils
+<ul> Team Details
     <li> Name: Sachin A<br>
         Branch: CSE <br>
         Semester: 3
